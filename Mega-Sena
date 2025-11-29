@@ -1,0 +1,259 @@
+<?php
+
+mostrarMenu();
+
+function mostrarMenu(): void 
+{
+    $ativo = true;
+
+    while ($ativo) {
+
+        echo "\n==============================\n";
+        echo "      SISTEMA DE LOTERIAS     \n";
+        echo "==============================\n";
+        echo "1 - Mega-Sena\n";
+        echo "2 - Quina\n";
+        echo "3 - Lotomania\n";
+        echo "4 - Lotofácil\n";
+        echo "5 - Sair\n";
+        echo "------------------------------\n";
+        $op = readline("Escolha uma opção: ");
+
+        switch ($op) {
+            case "1":
+                executarMegaSena();
+                break;
+
+            case "2":
+                executarQuina();
+                break;
+
+            case "3":
+                executarLotomania();
+                break;
+
+            case "4":
+                executarLotofácil();
+                break;
+
+            case "5":
+                echo "Encerrando o programa...\n";
+                $ativo = false;
+                break;
+
+            default:
+                echo "Opção inválida. Tente novamente.\n";
+        }
+    }
+}
+
+function executarMegaSena(): void
+
+{
+    echo "\n=== Mega-Sena ===\n";
+
+    $jogos = (int) readline("Quantos jogos deseja fazer? ");
+    $dezenas = (int) readline("Número de dezenas por jogo (6 a 20): ");
+
+    if ($dezenas < 6 || $dezenas > 20) {
+        echo "Quantidade de dezenas inválida!\n";
+        return;
+    }
+
+    $numeros = gerarDezenasUnicas($dezenas, 1, 60);
+
+    echo "\nDezenas sorteadas:\n";
+    foreach ($numeros as $n) {
+        echo $n . " ";
+    }
+
+    $valor = calcularPrecoMega($dezenas) * $jogos;
+
+    echo "\n\nValor total: R$ " . number_format($valor, 2, ",", ".") . "\n";
+}
+
+function executarQuina(): void
+
+{
+    echo "\n=== Quina ===\n";
+
+    $jogos = (int) readline("Quantos jogos deseja fazer? ");
+    $dezenas = (int) readline("Número de dezenas por jogo (6 a 20): ");
+
+    if ($dezenas < 6 || $dezenas > 20) {
+        echo "Quantidade de dezenas inválida!\n";
+        return;
+    }
+
+    $numeros = gerarDezenasUnicas($dezenas, 1, 80);
+
+    echo "\nDezenas sorteadas:\n";
+    foreach ($numeros as $n) {
+        echo $n . " ";
+    }
+
+    $valor = calcularPrecoMega($dezenas) * $jogos;
+
+    echo "\n\nValor total: R$ " . number_format($valor, 2, ",", ".") . "\n";
+}
+
+
+function executarLotomania(): void
+
+{
+    echo "\n=== Lotomania ===\n";
+
+    $jogos = (int) readline("Quantos jogos deseja fazer? ");
+    $dezenas = (int) readline("Número de dezenas por jogo (6 a 20): ");
+
+    if ($dezenas < 6 || $dezenas > 20) {
+        echo "Quantidade de dezenas inválida!\n";
+        return;
+    }
+
+    $numeros = gerarDezenasUnicas($dezenas, 1, 100);
+
+    echo "\nDezenas sorteadas:\n";
+    foreach ($numeros as $n) {
+        echo $n . " ";
+    }
+
+    $valor = calcularPrecoMega($dezenas) * $jogos;
+
+    echo "\n\nValor total: R$ " . number_format($valor, 2, ",", ".") . "\n";
+}
+
+function executarLotofácil(): void
+
+{
+    echo "\n=== Lotofácil ===\n";
+
+    $jogos = (int) readline("Quantos jogos deseja fazer? ");
+    $dezenas = (int) readline("Número de dezenas por jogo (6 a 20): ");
+
+    if ($dezenas < 6 || $dezenas > 20) {
+        echo "Quantidade de dezenas inválida!\n";
+        return;
+    }
+
+    $numeros = gerarDezenasUnicas($dezenas, 1, 25);
+
+    echo "\nDezenas sorteadas:\n";
+    foreach ($numeros as $n) {
+        echo $n . " ";
+    }
+
+    $valor = calcularPrecoMega($dezenas) * $jogos;
+
+    echo "\n\nValor total: R$ " . number_format($valor, 2, ",", ".") . "\n";
+}
+
+
+function gerarDezenasUnicas(int $quantidade, int $min, int $max): array
+{
+    $lista = [];
+
+    while (count($lista) < $quantidade) {
+        $n = rand($min, $max);
+
+        if (!in_array($n, $lista)) {
+            $lista[] = $n;
+        }
+    }
+
+    sort($lista);
+    return $lista;
+}
+
+function calcularPrecoMega(int $dez): int
+{
+    $tabela = [
+        6 => 6,
+        7 => 420,
+        8 => 168,
+        9 => 504,
+        10 => 1260,
+        11 => 2772,
+        12 => 5544,
+        13 => 10296,
+        14 => 18018,
+        15 => 30030,
+        16 => 48048,
+        17 => 74256,
+        18 => 111384,
+        19 => 162792,
+        20 => 232560
+    ];
+
+    return $tabela[$dez] ?? 0;
+}
+
+function calcularPrecoQuina(int $dez): int
+{
+    $tabela = [
+        6 => 6,
+        7 => 420,
+        8 => 168,
+        9 => 504,
+        10 => 1260,
+        11 => 2772,
+        12 => 5544,
+        13 => 10296,
+        14 => 18018,
+        15 => 30030,
+        16 => 48048,
+        17 => 74256,
+        18 => 111384,
+        19 => 162792,
+        20 => 232560
+    ];
+
+    return $tabela[$dez] ?? 0;
+}
+
+function calcularPrecoLotomania(int $dez): int
+{
+    $tabela = [
+        6 => 6,
+        7 => 420,
+        8 => 168,
+        9 => 504,
+        10 => 1260,
+        11 => 2772,
+        12 => 5544,
+        13 => 10296,
+        14 => 18018,
+        15 => 30030,
+        16 => 48048,
+        17 => 74256,
+        18 => 111384,
+        19 => 162792,
+        20 => 232560
+    ];
+
+    return $tabela[$dez] ?? 0;
+}
+
+function calcularPrecoLotofácil(int $dez): int
+{
+    $tabela = [
+        6 => 6,
+        7 => 420,
+        8 => 168,
+        9 => 504,
+        10 => 1260,
+        11 => 2772,
+        12 => 5544,
+        13 => 10296,
+        14 => 18018,
+        15 => 30030,
+        16 => 48048,
+        17 => 74256,
+        18 => 111384,
+        19 => 162792,
+        20 => 232560
+    ];
+
+    return $tabela[$dez] ?? 0;
+}
+//atribui o mesmo preco da mega sena para as demais loterias
